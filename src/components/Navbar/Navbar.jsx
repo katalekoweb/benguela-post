@@ -1,21 +1,21 @@
 import logo from "../../images/logo.png";
-import "./Navbar.css"
+import { Button, ImgLogo, InputSpace, Nav } from "./NavbarStyled";
+// import "./Navbar.css"
 
-const Navbar = () => {
+export default function Navbar () {
   return (
     <>
-      <nav>
-        <div className="input-search-space">
+      <Nav>
+        <InputSpace>
+          <ImgLogo src={logo} alt="Benguela Post Logo" />
+
           <i className="bi bi-search"></i>
           <input placeholder="Pesquise por tópico..." type="search" />
-        </div>
+        </InputSpace>
 
-        <img src={logo} alt="Benguela Post Logo" />
-
-        <button>Entrar</button>
-      </nav>
+        
+        <Button>Entrar</Button>
+      </Nav>
     </>
   );
 };
-
-export default Navbar;
