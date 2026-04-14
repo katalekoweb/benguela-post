@@ -25,7 +25,7 @@ export const CardBody = styled.article`
 
   & h2 {
     margin-bottom: 2rem;
-    font-weight: 500;
+    font-weight: 700;
   }
 
   & img {
