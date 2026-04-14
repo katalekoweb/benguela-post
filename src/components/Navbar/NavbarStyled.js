@@ -6,11 +6,11 @@ export const Nav = styled.nav`
   align-items: center;
   width: 100%;
   padding: 1rem 2rem;
-  position: fixed;
   top: 0;
   background: #fff;
   z-index: 1;
   box-shadow: rgba(60, 60, 77, 0.2) 0px 7px 19px 0px;
+  margin-bottom: 1rem;
 `;
 
 export const ImgLogo = styled.img`
@@ -46,7 +46,7 @@ export const InputSpace = styled.div`
     border: none;
     width: 100%;
     border-radius: 0.3rem;
-    :focus {
+    &:focus {
       border: 2px solid #F40009;
     }
   }
