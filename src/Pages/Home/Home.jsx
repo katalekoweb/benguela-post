@@ -1,20 +1,24 @@
+import { useEffect, useState } from "react";
 import Card from "../../components/Cards/Card";
 import Navbar from "../../components/Navbar/Navbar";
 
 import { posts } from "../../data";
-// import { getAllPosts } from "../../services/postServices";
+import { getAllPosts } from "../../services/postServices";
 import { HomeBody } from "./HomeStyle";
 
 export default function Home() {
+  let [postList, setPostList] = useState([]);
 
-  // let postList = [];
+  async function findAllPosts() {
+    const response = await getAllPosts();
+    setPostList(response?.data?.results);
+  }
 
-  // async function findAllPosts () {
-  //   const response = await getAllPosts()
-  //   postList = response?.data?.results
-  // }
+  useEffect(() => {
+    findAllPosts();
+  }, []); // with empty props only runs nce
 
-  // findAllPosts()
+  console.log(postList);
 
   return (
     <>
@@ -22,7 +26,9 @@ export default function Home() {
       {/* Fragment - Empty tag */}
       <Navbar />
       <HomeBody>
-      {posts.map((post, index) => <Card key={index} post={post} /> )}
+        {posts.map((post, index) => (
+          <Card key={index} post={post} />
+        ))}
       </HomeBody>
     </>
   );

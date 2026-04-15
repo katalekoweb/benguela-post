@@ -1,6 +1,7 @@
 import React from "react";
 // import {posts} from "../../data";
 import { CardBody, CardContainer, CardContent, CardFooter } from "./CardStyle";
+import TextLimit from "../TextLimit/TextLimit";
 
 const Card = ({ post }) => {
   return (
@@ -9,8 +10,9 @@ const Card = ({ post }) => {
         <CardContent>
           <div>
             <h2>{post.title}</h2>
-            <p>{post.text}</p>
+            <TextLimit text={post.text} limit={200} />
           </div>
+          
           <CardFooter>
             <div>
               <i className="bi bi-hand-thumbs-up"></i>

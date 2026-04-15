@@ -5,13 +5,11 @@ export const CardContainer = styled.section`
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  height: 480px;
+  min-height: 480px;
   padding: 2rem;
   border-radius: 0.6rem;
   background: linear-gradient(145deg, #ffffff, #f0f0f0);
-  box-shadow:
-    15px 15px 29px #bebebe,
-    -15px -15px 29px #ffffff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `;
 
 export const CardBody = styled.article`

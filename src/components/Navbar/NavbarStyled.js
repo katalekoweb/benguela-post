@@ -9,7 +9,7 @@ export const Nav = styled.nav`
   top: 0;
   background: #fff;
   z-index: 1;
-  box-shadow: rgba(60, 60, 77, 0.2) 0px 7px 19px 0px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   margin-bottom: 1rem;
 `;
 
@@ -22,9 +22,13 @@ export const ImgLogo = styled.img`
 
 export const InputSpace = styled.div`
   position: relative;
-  width: 300px;
+  width: 400px;
   display: flex;
   align-items: center;
+
+  &:focus {
+    width: 600px;
+  }
 
   i {
     position: absolute;

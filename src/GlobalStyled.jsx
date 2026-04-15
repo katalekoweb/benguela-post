@@ -17,6 +17,6 @@ html {
 body {
   max-width: 100vw;
   height: 100vh;
-  background: #eee9e9;
+  background: #ededee;
 }
 `;
