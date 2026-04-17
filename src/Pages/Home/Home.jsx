@@ -2,31 +2,46 @@ import { useEffect, useState } from "react";
 import Card from "../../components/Cards/Card";
 import Navbar from "../../components/Navbar/Navbar";
 
-import { posts } from "../../data";
-import { getAllPosts } from "../../services/postServices";
-import { HomeBody } from "./HomeStyle";
+import postService from "../../services/postServices";
+import { HomeBody, HomeHeader } from "./HomeStyle";
 
 export default function Home() {
-  let [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState([]);
+  const [featPost, setFeatPost] = useState({});
+  const [loading, setLoading] = useState(false)
 
   async function findAllPosts() {
-    const response = await getAllPosts();
+    setLoading(true)
+    const response = await postService.getAllPosts();
     setPostList(response?.data?.results);
+    setLoading(false)
+  }
+
+  async function getFeaturedPost() {
+    setLoading(true)
+    const response = await postService.getFeaturedPost();
+    setFeatPost(response?.data?.post);
+    setLoading(false)
   }
 
   useEffect(() => {
     findAllPosts();
+    getFeaturedPost()
   }, []); // with empty props only runs nce
-
-  console.log(postList);
 
   return (
     <>
       {" "}
       {/* Fragment - Empty tag */}
-      <Navbar />
+      
+      <HomeHeader>
+        { featPost?.id && <Card post={featPost} top={true} /> }
+      </HomeHeader>
+
       <HomeBody>
-        {posts.map((post, index) => (
+        { loading ? "Carregando..." : "" }
+        
+        {postList.map((post, index) => (
           <Card key={index} post={post} />
         ))}
       </HomeBody>

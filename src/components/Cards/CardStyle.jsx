@@ -24,6 +24,7 @@ export const CardBody = styled.article`
   & h2 {
     margin-bottom: 2rem;
     font-weight: 700;
+    font-size: ${props => props.top ? "3.1rem" : "1rem"} !important;
   }
 
   & img {

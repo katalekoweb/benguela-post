@@ -22,7 +22,7 @@ export const ImgLogo = styled.img`
 
 export const InputSpace = styled.div`
   position: relative;
-  width: 400px;
+  width: 700px;
   display: flex;
   align-items: center;
 
@@ -30,7 +30,7 @@ export const InputSpace = styled.div`
     width: 600px;
   }
 
-  i {
+  button {
     position: absolute;
     top: 1;
     right: 0.2rem;
@@ -40,6 +40,12 @@ export const InputSpace = styled.div`
     border-radius: 0.3rem;
     color: #757575;
     padding: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      background: #d6d3d3;
+    }
   }
 
   input {
@@ -56,22 +62,13 @@ export const InputSpace = styled.div`
   }
 `;
 
-export const Button = styled.button`
-  background-color: #F40009;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  padding: 0.4rem 1rem;
-  text-transform: uppercase;
-  color: #fff;
-  transition: all 0.4s ease-in-out;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  font-family: Roboto, arial;
-  /* width: 40%; */
-  font-weight: 500;
-  letter-spacing: 0.1rem;
-  :hover {
-    background: #c4181e;
-  }
-`;
+export const ErrorSpan = styled.span`
+  background: #ffaeae;
+  color: #9e0000;
+  padding: 1rem;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  justify-content: center;
+  margin-top: -1rem;
+`
