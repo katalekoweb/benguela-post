@@ -25,7 +25,7 @@ width: 100%;
 height: 400px;
 padding: 2rem;
 gap: 1rem;
-background: ${(props) => (props.type === "signin" ? "#a80a0f" : "white")};
+background: ${(props) => (props.type === "signin" ? "#b4050b" : "white")};
 color: ${(props) => (props.type === "signup" ? "#F40009" : "white")};
 
 & h2 {

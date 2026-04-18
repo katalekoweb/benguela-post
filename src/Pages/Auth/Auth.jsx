@@ -2,28 +2,51 @@ import React from "react";
 import { AuthContainer, Section } from "./AuthStyled";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signupSchema } from "../../components/Schemas/signupSchema";
+import { signinSchema } from "../../components/Schemas/signinSchema";
+import { ErrorSpan } from "../../components/Navbar/NavbarStyled";
 
 const Auth = () => {
-  const inRegister = () => {};
+
+  const { register: signupRegister, handleSubmit: handleSignupSubmit, reset: resetSignUp, formState: {errors: signupErrors } } = useForm({
+    resolver: zodResolver(signupSchema)
+  })
+
+  const { register: loginRegister, handleSubmit: handleSubmitLogin, reset: resetLogin, formState: {errors: loginErrors} } = useForm({
+    resolver: zodResolver(signinSchema)
+  })
+
+  const inHandlesubmit = (data) => {
+    console.log(data);    
+  }
+
+  const upHandlesubmit = (data) => {
+    console.log(data);    
+  }
 
   return (
     <AuthContainer>
       <Section type="signin">
         <h2>Entrar</h2>
 
-        <form action="">
+        <form onSubmit={handleSubmitLogin(inHandlesubmit)}>
           <Input
             type="text"
             placeholder={"Email"}
             name={"email"}
-            register={inRegister}
+            register={loginRegister}
           />
+          {loginErrors?.email && <ErrorSpan>{loginErrors?.email?.message}</ErrorSpan> }
           <Input
             type="password"
             placeholder={"Senha"}
             name={"password"}
-            register={inRegister}
+            register={loginRegister}
           />
+
+          {loginErrors?.password && <ErrorSpan>{loginErrors?.password?.message}</ErrorSpan> }
 
           <Button text={"Entrar"} type={"submit"} />
         </form>
@@ -31,31 +54,43 @@ const Auth = () => {
       <Section type="signup">
         <h2>Criar conta</h2>
 
-        <form action="">
+        <form onSubmit={handleSignupSubmit(upHandlesubmit)}>
           <Input
             type="text"
             placeholder={"Nome"}
             name={"name"}
-            register={inRegister}
+            register={signupRegister}
           />
+
+          {signupErrors?.name && <ErrorSpan>{signupErrors?.name?.message}</ErrorSpan> }
+
           <Input
             type="text"
             placeholder={"Email"}
             name={"email"}
-            register={inRegister}
+            register={signupRegister}
           />
+
+          {signupErrors?.email && <ErrorSpan>{signupErrors?.email?.message}</ErrorSpan> }
+
           <Input
             type="password"
             placeholder={"Senha"}
             name={"password"}
-            register={inRegister}
+            register={signupRegister}
           />
+
+          {signupErrors?.password && <ErrorSpan>{signupErrors?.password?.message}</ErrorSpan> }
+
           <Input
             type="password"
             placeholder={"Confirmar senha"}
             name={"confirm_password"}
-            register={inRegister}
+            register={signupRegister}
           />
+
+          {signupErrors?.confirm_password && <ErrorSpan>{signupErrors?.confirm_password?.message}</ErrorSpan> }
+
           <Button text={"Cadastrar"} type={"submit"} />
         </form>
       </Section>

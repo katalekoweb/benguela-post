@@ -5,12 +5,9 @@ import { useForm } from "react-hook-form";
 import {z} from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../Button/Button";
+import { searchSchema } from "../Schemas/searchSchema";
 // import "./Navbar.css"
 
-const searchSchema = z.object({
-  query: z.string().nonempty({message: "A pesquisa não pode ser vazia"})
-    .refine((value) => !/^\s*$/.test(value), {message: "A pesquisa não pode ter apenas espaços"})
-})
 
 export default function Navbar () {
   const {register, handleSubmit, reset, formState: {errors}} = useForm({
