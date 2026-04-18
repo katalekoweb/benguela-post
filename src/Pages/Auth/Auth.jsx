@@ -7,8 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../../components/Schemas/signupSchema";
 import { signinSchema } from "../../components/Schemas/signinSchema";
 import { ErrorSpan } from "../../components/Navbar/NavbarStyled";
+import userService from "../../services/userService"
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+
+  const navigate = useNavigate()
 
   const { register: signupRegister, handleSubmit: handleSignupSubmit, reset: resetSignUp, formState: {errors: signupErrors } } = useForm({
     resolver: zodResolver(signupSchema)
@@ -22,8 +27,14 @@ const Auth = () => {
     console.log(data);    
   }
 
-  const upHandlesubmit = (data) => {
-    console.log(data);    
+  const upHandlesubmit = async (data) => {
+      try {
+        const response = await userService.signup(data)    
+        Cookies.set("token", response.data?.token, { expires: 1 })  
+        navigate("/")
+      } catch (error) {
+        console.log(error);        
+      }
   }
 
   return (

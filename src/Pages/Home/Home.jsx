@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 import postService from "../../services/postServices";
 import { HomeBody, HomeHeader } from "./HomeStyle";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
@@ -27,6 +28,8 @@ export default function Home() {
   useEffect(() => {
     findAllPosts();
     getFeaturedPost()
+    console.log(Cookies.get("token"));
+    
   }, []); // with empty props only runs nce
 
   return (
