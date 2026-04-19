@@ -9,6 +9,7 @@ import Search from './Pages/Search/Search.jsx'
 import { GlobalStyle } from './GlobalStyled.jsx'
 import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 import Auth from './Pages/Auth/Auth.jsx'
+import Profile from './Pages/Profile/Profile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,9 @@ const router = createBrowserRouter([
     element: <Navbar/>,
     errorElement: <ErrorPage />,
     children: [
-      {path: "/", element: <Home />}, {path: "/search/:query", element: <Search />}
+      {path: "/", element: <Home />}, 
+      {path: "/search/:query", element: <Search />},
+      {path: "/profile", element: <Profile />}
     ]
   },
   {

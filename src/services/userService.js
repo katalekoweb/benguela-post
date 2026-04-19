@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const localBaseUrl = "http://localhost:3000"
 const remoteBaseUrl = "https://breaking-news-api-a622.onrender.com"
@@ -15,6 +16,22 @@ const signup = (data) => {
     return response
 }
 
+const signin = (data) => {
+    const body = data
+    const response = axios.post(`${remoteBaseUrl}/auth/login`, body)
+    return response
+}
+
+const getLoggedUser = () => {
+    const response = axios.get(`${remoteBaseUrl}/users/logged`, {
+        headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+        }
+    })
+    return response
+}
+
+
 function generateUsername (name) {
     const nameWithoutSpaces = name.replace(/\s/g, "").toLowerCase()
     const randomNumber = Math.floor(Math.random() * 1000);
@@ -22,5 +39,7 @@ function generateUsername (name) {
 }
 
 export default {
-    signup
+    signup,
+    signin,
+    getLoggedUser
 }

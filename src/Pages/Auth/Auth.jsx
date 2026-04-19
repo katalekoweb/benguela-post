@@ -23,8 +23,14 @@ const Auth = () => {
     resolver: zodResolver(signinSchema)
   })
 
-  const inHandlesubmit = (data) => {
-    console.log(data);    
+  const inHandlesubmit = async (data) => {
+    try {
+        const response = await userService.signin(data)    
+        Cookies.set("token", response.data?.token, { expires: 1 })  
+        navigate("/")
+      } catch (error) {
+        console.log(error);        
+      }  
   }
 
   const upHandlesubmit = async (data) => {
