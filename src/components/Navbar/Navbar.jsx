@@ -5,6 +5,7 @@ import {
   ImgLogo,
   InputSpace,
   Nav,
+  NavInner,
   UserLoggedSpace,
 } from "./NavbarStyled";
 import { useForm } from "react-hook-form";
@@ -13,12 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "../Button/Button";
 import { searchSchema } from "../Schemas/searchSchema";
 import userService from "../../services/userService";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { UserContext } from "../../Context/UserContext";
 // import "./Navbar.css"
 
 export default function Navbar() {
-  const [user, setUser] = useState({});
+  const {user, setUser} = useContext(UserContext)
 
   const {
     register,
@@ -61,12 +63,12 @@ export default function Navbar() {
   return (
     <>
       <Nav>
+      <NavInner>                        {/* ← adiciona aqui */}
         <form onSubmit={handleSubmit(onSearch)}>
           <InputSpace>
             <Link to={"/"}>
               <ImgLogo src={logo} alt="Benguela Post Logo" />
             </Link>
-
             <button type="submit">
               <i className="bi bi-search"></i>
             </button>
@@ -80,7 +82,9 @@ export default function Navbar() {
 
         {user?.name ? (
           <UserLoggedSpace>
-            <Link to={"/profile"}><h2> {user.name} </h2></Link>
+            <Link style={{ textDecoration: "none" }} to={"/profile"}>
+              <h2>{user.name}</h2>
+            </Link>
             <i className="bi bi-box-arrow-right" onClick={signout}></i>
           </UserLoggedSpace>
         ) : (
@@ -88,7 +92,8 @@ export default function Navbar() {
             <Button text="Entrar" />
           </Link>
         )}
-      </Nav>
+      </NavInner>                       {/* ← fecha aqui */}
+    </Nav>
 
       <div>
         {errors.query && <ErrorSpan>{errors.query?.message}</ErrorSpan>}

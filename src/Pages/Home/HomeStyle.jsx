@@ -11,6 +11,6 @@ export const HomeBody = styled.section`
 
 export const HomeHeader = styled.div`
   width: 75%;
-  margin: 1rem auto;
+  margin: 0rem auto;
   display: flex;
 `;

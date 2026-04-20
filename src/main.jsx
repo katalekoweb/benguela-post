@@ -10,6 +10,8 @@ import { GlobalStyle } from './GlobalStyled.jsx'
 import ErrorPage from './Pages/ErrorPage/ErrorPage.jsx'
 import Auth from './Pages/Auth/Auth.jsx'
 import Profile from './Pages/Profile/Profile.jsx'
+import UserProvider from './Context/UserContext.jsx'
+import ManageNews from './Pages/ManageNews/ManageNews.jsx'
 
 const router = createBrowserRouter([
   {
@@ -19,7 +21,8 @@ const router = createBrowserRouter([
     children: [
       {path: "/", element: <Home />}, 
       {path: "/search/:query", element: <Search />},
-      {path: "/profile", element: <Profile />}
+      {path: "/profile", element: <Profile />},
+      {path: "/manage-news/:action", element: <ManageNews /> }
     ]
   },
   {
@@ -31,6 +34,8 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
      <GlobalStyle />
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </StrictMode>,
 )

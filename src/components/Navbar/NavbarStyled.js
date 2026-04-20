@@ -1,38 +1,54 @@
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   width: 100%;
-  padding: 1rem 2rem;
-  top: 0;
   background: #fff;
-  z-index: 1;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   margin-bottom: 1rem;
 `;
 
-export const ImgLogo = styled.img`
-  height: 40px;
-  width: 40px;
-  object-fit: cover;
-  margin-right: 1rem;
+/* ← novo: centraliza o conteúdo igual às outras secções */
+export const NavInner = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 75%;
+  margin: 0 auto;
+  padding: 1em 0;
+
+  /* tablet */
+  @media (max-width: 768px) {
+    width: 92%;
+    gap: 0.75rem;
+  }
+
+  /* mobile */
+  @media (max-width: 480px) {
+    width: 95%;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 `;
 
 export const InputSpace = styled.div`
   position: relative;
-  width: 700px;
+  width: 500px;
   display: flex;
   align-items: center;
 
-  &:focus {
-    width: 600px;
+  @media (max-width: 1024px) {
+    width: 360px;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
   }
 
   button {
     position: absolute;
-    top: 1;
     right: 0.2rem;
     z-index: 10;
     border: none;
@@ -57,10 +73,18 @@ export const InputSpace = styled.div`
     width: 100%;
     border-radius: 0.3rem;
     &:focus {
-      border: 2px solid #F40009;
+      border: 2px solid #f40009;
     }
   }
 `;
+
+export const ImgLogo = styled.img`
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  margin-right: 1rem;
+`;
+
 
 export const ErrorSpan = styled.span`
   background: #ffaeae;
