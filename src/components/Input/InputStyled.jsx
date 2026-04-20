@@ -5,3 +5,9 @@ export const InputSpace = styled.input`
     border-radius: 6px;
     border: 1px solid #efefef;
 `
+
+export const TextSpace = styled.textarea`
+    padding: 0.9rem;
+    border-radius: 6px;
+    border: 1px solid #efefef;
+`

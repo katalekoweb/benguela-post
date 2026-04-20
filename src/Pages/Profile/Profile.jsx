@@ -13,6 +13,7 @@ import {
 } from "./ProfileStyled";
 import postServices from "../../services/postServices";
 import Card from "../../components/Cards/Card";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -20,12 +21,13 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
 
   const getUserPosts = async () => {
-    setLoading(true);
-    const response = await postServices.userPosts(user.username);
-    setPosts(response?.data?.results);
-    console.log(response);
-
-    setLoading(false);
+    try {
+      setLoading(true);
+      const response = await postServices.userPosts(user.username);
+      setPosts(response?.data?.results);
+    } catch (error) {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -55,9 +57,11 @@ const Profile = () => {
         </ProfileUser>
 
         <ProfileActions>
-          <ProfileIconAdd>
-            <i className="bi bi-plus-circle"></i>
-          </ProfileIconAdd>
+          <Link to={"/manage-news/add/post"}>
+            <ProfileIconAdd>
+              <i className="bi bi-plus-circle"></i>
+            </ProfileIconAdd>
+          </Link>
         </ProfileActions>
       </ProfileHeader>
 
@@ -67,7 +71,9 @@ const Profile = () => {
         {posts.length == 0 && !loading ? (
           <h3>Ainda não tem nenhum post</h3>
         ) : (
-          posts.map((post, index) => <Card key={index} post={post} />)
+          posts.map((post, index) => (
+            <Card key={index} actions={true} post={post} />
+          ))
         )}
       </ProfilePosts>
     </ProfileContainer>

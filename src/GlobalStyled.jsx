@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
@@ -20,3 +20,14 @@ body {
   background: #ededee;
 }
 `;
+
+export const ErrorSpan = styled.span`
+  background: #ffaeae;
+  color: #9e0000;
+  padding: 0.6rem;
+  display: flex;
+  font-size: 1.1rem;
+  font-weight: bold;
+  justify-content: center;
+  margin-top: -1rem;
+`
