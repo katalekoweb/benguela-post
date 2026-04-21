@@ -17,16 +17,6 @@ import postServices from "../../services/postServices";
 
 const Card = ({ post, top, actions = false }) => {
 
-  const navigate = useNavigate()
-
-  const deletePost = async () => {
-    try {
-      const response = await postServices.deletePost(post.id)
-      navigate("/profile")
-    } catch (error) {
-      console.log(error);      
-    }
-  }
 
   return (
     <CardContainer>
@@ -79,8 +69,7 @@ const Card = ({ post, top, actions = false }) => {
           <FooterAction>
           { actions ? (
             <>
-              <Link to={`/manage-news/edit/${post.id}`}><i className="bi bi-pencil-square"></i></Link>
-              <i className="bi bi-trash3" style={{marginLeft: '15px'}} onClick={() => deletePost()}></i>
+              <Link to={`/manage-news/edit/${post.id}`}><i className="bi bi-pencil-square"></i></Link>             
             </>
           ) : "" }
           </FooterAction>

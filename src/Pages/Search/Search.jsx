@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import postServices from "../../services/postServices";
-import { HomeBody } from "../Home/HomeStyle";
+import { Feed } from "../Home/HomeStyle";
 import { ContainerResults, TextResults } from "./SearcStyled";
 import Card from "../../components/Cards/Card";
 
@@ -36,13 +36,13 @@ const Search = () => {
           { postList.length ? `Encontramos ${postList.length} resultados` : `Nenhum resultado encontrado para ${query}.` }
         </TextResults> }
 
-        <HomeBody>
+        <Feed>
           {loading ? "Carregando..." : ""}
 
           {postList.map((post, index) => (
             <Card key={index} post={post} />
           ))}
-        </HomeBody>
+        </Feed>
       </ContainerResults>
     </>
   );

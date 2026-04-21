@@ -52,6 +52,9 @@ const editPost = (data, id) => {
 };
 
 const deletePost = (id) => {
+
+  if (!id) return null;
+  
   const response = axios.delete(`${remoteBaseUrl}/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,

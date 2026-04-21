@@ -3,8 +3,15 @@ import Card from "../../components/Cards/Card";
 import Navbar from "../../components/Navbar/Navbar";
 
 import postService from "../../services/postServices";
-import { HomeBody, HomeHeader } from "./HomeStyle";
 import Cookies from "js-cookie";
+
+import {
+  HomeContainer,
+  Feed,
+  Sidebar,
+  TrendsBox,
+  CreatePostButton,
+} from "./HomeStyle";
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
@@ -15,7 +22,7 @@ export default function Home() {
     try {
       setLoading(true);
       const response = await postService.getAllPosts();
-      setPostList(response?.data?.results);
+      setPostList(response?.data?.results || []);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -27,7 +34,7 @@ export default function Home() {
     try {
       setLoading(true);
       const response = await postService.getFeaturedPost();
-      setFeatPost(response?.data?.post);
+      setFeatPost(response?.data?.post || {});
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -38,25 +45,45 @@ export default function Home() {
   useEffect(() => {
     findAllPosts();
     getFeaturedPost();
-    console.log(Cookies.get("token"));
-  }, []); // with empty props only runs nce
+    console.log("Token:", Cookies.get("token"));
+  }, []);
 
   return (
     <>
-      {" "}
-      {/* Fragment - Empty tag */}
-      <HomeHeader>
-        {featPost?.id && <Card post={featPost} top={true} />}
-      </HomeHeader>
-      <HomeBody>
-        {loading ? "Carregando..." : ""}
 
-        { postList.length == 0 && !loading ? (
-          <h3>Ainda não tem nenhum post</h3>
-        ) : (postList.map((post, index) => (
-          <Card key={index} post={post} />
-        )))}
-      </HomeBody>
+      <HomeContainer>
+        {/* FEED */}
+        <Feed>
+          {loading && <p>Carregando...</p>}
+
+          {featPost?.id && <Card post={featPost} top={true} />}
+
+          {postList.length === 0 && !loading ? (
+            <h3>Ainda não tem nenhum post</h3>
+          ) : (
+            postList.map((post) => (
+              <Card key={post.id} post={post} />
+            ))
+          )}
+        </Feed>
+
+        {/* SIDEBAR */}
+        <Sidebar>
+          <TrendsBox>
+            <h3>Trends</h3>
+            <ul>
+              <li>#React</li>
+              <li>#JavaScript</li>
+              <li>#AngolaTech</li>
+              <li>#WebDev</li>
+            </ul>
+          </TrendsBox>
+
+          <CreatePostButton onClick={() => alert("Criar Post")}>
+            Criar Post
+          </CreatePostButton>
+        </Sidebar>
+      </HomeContainer>
     </>
   );
 }

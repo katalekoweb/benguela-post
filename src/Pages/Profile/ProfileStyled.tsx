@@ -103,3 +103,10 @@ width: 75%;
     margin-top: 1rem;
 }
 `
+
+export const DeleteContainer = styled.div`
+margin-top: -2rem;
+position: absolute;
+top: 60px;
+right: 30px;
+`

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../Context/UserContext";
 import {
+  DeleteContainer,
   ProfileActions,
   ProfileAvatar,
   ProfileBackground,
@@ -13,7 +14,7 @@ import {
 } from "./ProfileStyled";
 import postServices from "../../services/postServices";
 import Card from "../../components/Cards/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const { user } = useContext(UserContext);
@@ -25,8 +26,23 @@ const Profile = () => {
       setLoading(true);
       const response = await postServices.userPosts(user.username);
       setPosts(response?.data?.results);
+      setLoading(false);
     } catch (error) {
       setLoading(false);
+    }
+  };
+
+
+  const deletePost = async (post) => {
+
+    try {
+      if (confirm("Tem certeza que quer excluir o poste?") && post?.id) {
+        await postServices.deletePost(post.id);
+        getUserPosts()
+      }
+      
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -72,7 +88,16 @@ const Profile = () => {
           <h3>Ainda não tem nenhum post</h3>
         ) : (
           posts.map((post, index) => (
-            <Card key={index} actions={true} post={post} />
+            <div key={index} style={{position: "relative"}}>
+              <Card key={index} actions={true} post={post} />
+              <DeleteContainer>
+                <i
+                  className="bi bi-trash3"
+                  style={{ marginLeft: "15px" }}
+                  onClick={() => deletePost(post)}
+                ></i>
+              </DeleteContainer>
+            </div>
           ))
         )}
       </ProfilePosts>
