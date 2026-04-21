@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const HomeContainer = styled.section`
   display: grid;
-  grid-template-columns: minmax(0, 600px) 300px;
+  grid-template-columns: minmax(0, 400px) 600px;
   gap: 2rem;
 
   width: 90%;

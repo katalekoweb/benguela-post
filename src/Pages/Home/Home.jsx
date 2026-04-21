@@ -52,18 +52,6 @@ export default function Home() {
   return (
     <>
       <HomeContainer>
-        {/* FEED */}
-        <Feed>
-          {loading && <p>Carregando...</p>}
-
-          {/* {featPost?.id && <Card post={featPost} top={true} />} */}
-
-          {postList.length === 0 && !loading ? (
-            <h3>Ainda não tem nenhum post</h3>
-          ) : (
-            postList.map((post) => <Card key={post.id} post={post} />)
-          )}
-        </Feed>
 
         {/* SIDEBAR */}
         <Sidebar>
@@ -81,6 +69,21 @@ export default function Home() {
             Criar Post
           </CreatePostButton>
         </Sidebar>
+        
+        {/* FEED */}
+        <Feed>
+          {loading && <p>Carregando...</p>}
+
+          {/* {featPost?.id && <Card post={featPost} top={true} />} */}
+
+          {postList.length === 0 && !loading ? (
+            <h3>Ainda não tem nenhum post</h3>
+          ) : (
+            postList.map((post) => <Card key={post.id} post={post} />)
+          )}
+        </Feed>
+
+        
       </HomeContainer>
     </>
   );

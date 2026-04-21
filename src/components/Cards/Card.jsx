@@ -32,9 +32,9 @@ const Card = ({ post, top, actions = false }) => {
       return (
         <Link
           key={index}
-          to={`/search?tag=${tag}`}
+          to={`/search/${tag}`}
           style={{
-            color: "#1da1f2",
+            color: "#e40606",
             textDecoration: "none",
             fontWeight: 500,
           }}
