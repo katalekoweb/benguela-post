@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   CardContainer,
   CardBody,
@@ -10,41 +10,131 @@ import {
   FooterAction,
   CardText,
   CardTitle,
+  SpinIcon,
 } from "./CardStyle";
 import TextLimit from "../TextLimit/TextLimit";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import postServices from "../../services/postServices";
+import Cookies from "js-cookie";
+import { UserContext } from "../../Context/UserContext";
 
 const Card = ({ post, top, actions = false }) => {
 
+  const parseTextWithHashtags = (text) => {
+  if (!text) return "";
+
+  const parts = text.split(/(\#[a-zA-Z0-9_]+)/g);
+
+  return parts.map((part, index) => {
+    if (part.startsWith("#")) {
+      const tag = part.substring(1);
+
+      return (
+        <Link
+          key={index}
+          to={`/search?tag=${tag}`}
+          style={{
+            color: "#1da1f2",
+            textDecoration: "none",
+            fontWeight: 500,
+          }}
+        >
+          {part}
+        </Link>
+      );
+    }
+
+    return part;
+  });
+};
+  
+  const { user } = useContext(UserContext);
+
+  const [localPost, setLocalPost] = useState(post);
+  const [loading, setLoading] = useState(false);
+  const [liked, setLiked] = useState(false);
+
+  // verifica se já deu like
+  useEffect(() => {
+    if (localPost?.likes && user) {
+      const hasLiked = localPost.likes.some((like) => like.userId === user._id);
+      setLiked(hasLiked);
+    }
+  }, [localPost, user]);
+
+  const handleLike = async () => {
+    if (loading) return;
+
+    setLoading(true);
+
+    try {
+      const response = await postServices.likeToggle(post.id);
+
+      const updatedPost = response.data?.post;
+
+      if (updatedPost) {
+        setLocalPost(updatedPost);
+
+        const hasLiked = updatedPost.likes.includes(user._id);
+        setLiked(hasLiked);
+      }
+    } catch (error) {
+      console.log(error);
+
+      // rollback se falhar
+      setLiked((prev) => !prev);
+    }
+
+    setLoading(false);
+  };
 
   return (
     <CardContainer>
       <CardBody>
         <CardHeader>
           <Avatar>
-            {post?.author?.name?.charAt(0).toUpperCase() ?? "U"}
+            {localPost?.user?.name?.charAt(0).toUpperCase() ?? "U"}
           </Avatar>
+
           <AuthorInfo>
-            <span className="name">{post?.user?.name ?? "Utilizador"}</span>
-            <span className="handle">@{post?.user?.username ?? "user"}</span>
+            <span className="name">
+              {localPost?.user?.name ?? "Utilizador"}
+            </span>
+            <span className="handle">
+              @{localPost?.user?.username ?? "user"}
+            </span>
           </AuthorInfo>
         </CardHeader>
 
-        <CardTitle top={top}>{post?.title}</CardTitle>
+        <CardTitle top={top}>{localPost?.title}</CardTitle>
 
         <CardText>
-          <TextLimit text={post?.text} limit={top ? 300 : 150} />
+          {parseTextWithHashtags(localPost.text)}
         </CardText>
 
-        {post?.banner && (
-          <CardImage src={post.banner} alt={post?.title} />
+        {localPost?.banner && (
+          <CardImage src={localPost.banner} alt={localPost?.title} />
         )}
 
         <CardFooter>
+          {/* LIKE */}
+          <FooterAction onClick={handleLike} disabled={loading} like>
+            <SpinIcon
+              className={`bi ${
+                loading
+                  ? "bi-arrow-repeat spin"
+                  : liked
+                  ? "bi-hand-thumbs-up-fill"
+                  : "bi-hand-thumbs-up"
+              }`}
+              
+            />
+            <span>{localPost?.likes?.length ?? 0}</span>
+          </FooterAction>
+
           <FooterAction>
             <i className="bi bi-chat" />
-            <span>{post?.comments?.length ?? 0}</span>
+            <span>{localPost?.comments?.length ?? 0}</span>
           </FooterAction>
 
           <FooterAction>
@@ -52,14 +142,9 @@ const Card = ({ post, top, actions = false }) => {
             <span>0</span>
           </FooterAction>
 
-          <FooterAction like>
-            <i className="bi bi-hand-thumbs-up" />
-            <span>{post?.likes?.length ?? 0}</span>
-          </FooterAction>
-
           <FooterAction>
             <i className="bi bi-bar-chart" />
-            <span>{post?.views ?? "1.2K"}</span>
+            <span>{localPost?.views ?? "1.2K"}</span>
           </FooterAction>
 
           <FooterAction>
@@ -67,11 +152,11 @@ const Card = ({ post, top, actions = false }) => {
           </FooterAction>
 
           <FooterAction>
-          { actions ? (
-            <>
-              <Link to={`/manage-news/edit/${post.id}`}><i className="bi bi-pencil-square"></i></Link>             
-            </>
-          ) : "" }
+            {actions && (
+              <Link to={`/manage-news/edit/${localPost.id}`}>
+                <i className="bi bi-pencil-square"></i>
+              </Link>
+            )}
           </FooterAction>
         </CardFooter>
       </CardBody>

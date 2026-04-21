@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import { keyframes } from "styled-components";
+
 
 /* ── tokens ── */
 const tokens = {
@@ -155,5 +157,21 @@ export const FooterAction = styled.button`
             color: ${tokens.accent};
             background: rgba(29, 155, 240, 0.1);
           `}
+  }
+`;
+
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+export const SpinIcon = styled.i`
+  &.spin {
+    animation: ${spin} 0.8s linear infinite;
   }
 `;

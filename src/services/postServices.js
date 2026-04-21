@@ -54,7 +54,7 @@ const editPost = (data, id) => {
 const deletePost = (id) => {
 
   if (!id) return null;
-  
+
   const response = axios.delete(`${remoteBaseUrl}/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${Cookies.get("token")}`,
@@ -62,6 +62,17 @@ const deletePost = (id) => {
   });
   return response;
 };
+
+const likeToggle = (id) => {
+  if (!id) return null;
+
+  const response = axios.patch(`${remoteBaseUrl}/posts/like/${id}`, {}, {
+    headers: {
+      Authorization: `Bearer ${Cookies.get("token")}`,
+    },
+  });
+  return response;
+}
 
 export default {
   getAllPosts,
@@ -71,5 +82,6 @@ export default {
   userPosts,
   createPost,
   editPost,
-  deletePost
+  deletePost,
+  likeToggle
 };
